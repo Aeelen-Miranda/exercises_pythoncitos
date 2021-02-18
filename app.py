@@ -432,7 +432,7 @@ tabla6a.update_layout(paper_bgcolor='rgba(255,255,255,0)', #color de fondo
 
 mytitle=''
 tabtitle='COVID-19 en México'
-githublink='https://github.com/Aeelen/exercises_pythoncitos/'
+githublink='https://github.com/Aeelen-Miranda/exercises_pythoncitos/blob/master/app.py'
 sourceurl='https://plotly.com/python/histograms/'
 
 
