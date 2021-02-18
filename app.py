@@ -496,7 +496,7 @@ app.layout = html.Div(children=[
 # Quinta franja
     
     html.Div(children = [dcc.Graph(figure=tabla6)],
-             style={'margin': '-63.8% 0px -50% 55px', 'width':'100%',  #margen: arriba,derecha,abajo,izquierda
+             style={'margin': '-63.9% 0px -50% 55px', 'width':'100%',  #margen: arriba,derecha,abajo,izquierda
                                                                                                     
                     'font-family': 'Montserrat'}),
                    
@@ -505,7 +505,7 @@ app.layout = html.Div(children=[
 # Sexta franja
     
     html.Div(children = [dcc.Graph(figure=tabla6a)],
-             style={'margin': '-26.8% 0px 0% 55px', 'width':'100%',  #margen: arriba,derecha,abajo,izquierda
+             style={'margin': '-22.8% 0px 0% 55px', 'width':'100%',  #margen: arriba,derecha,abajo,izquierda
                                                                                                     
                     'font-family': 'Montserrat'}),
                    
