@@ -1,3 +1,5 @@
+
+
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
@@ -223,9 +225,9 @@ tabla2.update_traces(header_font_color="black", selector=dict(type='table'))
 tabla2.update_traces(header_line_color="#e3e3e3", selector=dict(type='table'))
 
 #cells
-tabla2.update_traces(cells_font_size=60, selector=dict(type='table'))
+tabla2.update_traces(cells_font_size=50, selector=dict(type='table'))
 tabla2.update_traces(cells_font_color= "goldenrod", selector=dict(type='table'))
-tabla2.update_traces(cells_font_family= 'Montserrat',  selector=dict(type='table'))
+tabla2.update_traces(cells_font_family= 'Montserrat ExtraBold',  selector=dict(type='table'))
 tabla2.update_traces(cells_fill_color = 'rgba(227,227,227,0.5)', selector =dict(type="table"))
 tabla2.update_traces(hoverlabel_namelength=80, selector=dict(type='table'))
 tabla2.update_traces(cells_line_color= "#e3e3e3", selector=dict(type='table'))
@@ -258,14 +260,14 @@ tabla2a = go.Figure(data=[go.Table(
 #HEADER
 tabla2a.update_traces(header_fill_color='rgba(227,227,227,0.5)', selector=dict(type='table'))
 tabla2a.update_traces(header_font_family= "Montserrat ExtraBold", selector=dict(type='table'))
-tabla2a.update_traces(header_font_size=14, selector=dict(type='table'))
+tabla2a.update_traces(header_font_size=16, selector=dict(type='table'))
 tabla2a.update_traces(header_font_color="black", selector=dict(type='table'))
 tabla2a.update_traces(header_line_color="#e3e3e3", selector=dict(type='table'))
 
 #cells
-tabla2a.update_traces(cells_font_size=60, selector=dict(type='table'))
+tabla2a.update_traces(cells_font_size=50, selector=dict(type='table'))
 tabla2a.update_traces(cells_font_color= "goldenrod", selector=dict(type='table'))
-tabla2a.update_traces(cells_font_family= 'Montserrat',  selector=dict(type='table'))
+tabla2a.update_traces(cells_font_family= 'Montserrat ExtraBold',  selector=dict(type='table'))
 tabla2a.update_traces(cells_fill_color = 'rgba(227,227,227,0.5)', selector =dict(type="table"))
 tabla2a.update_traces(hoverlabel_namelength=80, selector=dict(type='table'))
 tabla2a.update_traces(cells_line_color= "#e3e3e3", selector=dict(type='table'))
@@ -278,7 +280,7 @@ tabla2a.update_layout(paper_bgcolor='rgba(227,227,227,0.5)', #color de fondo
 
 ############
 
-############################### 4 Cintillo meses 
+############################### 3 Cintillo meses CONTAGIOS
 
 patabla6 = {#COLUMNS        #FILAS
             #'    '        : ['Contagios'],#, 'Decesos'],
@@ -317,17 +319,17 @@ tabla6 = go.Figure(data=[go.Table(
                height= 25,
                align='left'),)])
 #HEADER
-tabla6.update_traces(header_fill_color='rgba(255,255,255,0)', selector=dict(type='table'))
+tabla6.update_traces(header_fill_color='#284740', selector=dict(type='table'))
 tabla6.update_traces(header_font_family= "Montserrat", selector=dict(type='table'))
 tabla6.update_traces(header_font_size=9, selector=dict(type='table'))
-tabla6.update_traces(header_font_color="black", selector=dict(type='table'))
+tabla6.update_traces(header_font_color="white", selector=dict(type='table'))
 tabla6.update_traces(header_line_color='rgba(255,255,255,0)', selector=dict(type='table'))
 
 #cells
 tabla6.update_traces(cells_font_size=15, selector=dict(type='table'))
-tabla6.update_traces(cells_font_color= "black", selector=dict(type='table'))
-tabla6.update_traces(cells_font_family= 'Montserrat',  selector=dict(type='table'))
-tabla6.update_traces(cells_fill_color = 'rgba(255,255,255,0)', selector =dict(type="table"))
+tabla6.update_traces(cells_font_color= "white", selector=dict(type='table'))
+tabla6.update_traces(cells_font_family= 'Montserrat ExtraBold',  selector=dict(type='table'))
+tabla6.update_traces(cells_fill_color = '#284740', selector =dict(type="table"))
 tabla6.update_traces(hoverlabel_namelength=13, selector=dict(type='table'))
 tabla6.update_traces(cells_line_color= "rgba(255,255,255,0)", selector=dict(type='table'))
 
@@ -335,6 +337,79 @@ tabla6.update_layout(paper_bgcolor='rgba(255,255,255,0)', #color de fondo
                     plot_bgcolor='rgba(255,255,255,0)',
                     #line_color = 'rgba(255,255,255,0)'
                     )
+
+
+
+
+
+
+############
+
+############################### 3 Cintillo meses DECESOS
+
+patabla6a = {#COLUMNS        #FILAS
+            #'    '        : ['Contagios'],#, 'Decesos'],
+            'febrero20'   : [str(f"{decesos_feb20:,d}")],#, decesos_feb20],
+            'marzo20'     : [str(f"{decesos_mar20:,d}")],#, decesos_mar20],
+            'abril20'     : [str(f"{decesos_abr20:,d}")],#, decesos_abr20],
+            'mayo20'      : [str(f"{decesos_may20:,d}")],#, decesos_may20],
+            'junio20'     : [str(f"{decesos_jun20:,d}")],#, decesos_jun20],
+            'julio20'     : [str(f"{decesos_jul20:,d}")],#, decesos_jul20],
+            'agosto20'    : [str(f"{decesos_ago20:,d}")],#, decesos_ago20],
+            'septiembre20': [str(f"{decesos_sep20:,d}")],#, decesos_sep20],
+            'octubre20'   : [str(f"{decesos_oct20:,d}")],#, decesos_oct20],
+            'noviembre20' : [str(f"{decesos_nov20:,d}")],#, decesos_nov20],
+            'diciembre20' : [str(f"{decesos_dic20:,d}")],#, decesos_dic20],
+            'enero21'     : [str(f"{decesos_ene21:,d}")],#, decesos_ene21],
+            'febrero21'   : [str(f"{decesos_feb21:,d}")],#, decesos_feb21],
+                            }
+
+
+
+patabla7a = pd.DataFrame (patabla6a, columns = [#'blanc',
+                                              'febrero20','marzo20','abril20','mayo20','junio20','julio20',
+                                              'agosto20','septiembre20','octubre20','noviembre20','diciembre20',
+                                              'enero21','febrero21'])
+tabla6a = go.Figure(data=[go.Table(
+    header=dict(values=list(patabla6a),
+                align=['left']),
+                columnwidth = 2,
+    
+    cells=dict(values=[#patabla7.blanc,
+                       patabla7a.febrero20,patabla7a.marzo20,     patabla7a.abril20,patabla7a.mayo20,patabla7a.junio20,patabla7a.julio20,
+                       patabla7a.agosto20, patabla7a.septiembre20,patabla7a.octubre20,patabla7a.noviembre20,patabla7a.diciembre20,
+                       patabla7a.enero21,  patabla7a.febrero21],
+               # fill_color='#e3e3e3',
+               font_size=2,
+               height= 25,
+               align='left'),)])
+#HEADER
+tabla6a.update_traces(header_fill_color='#284740', selector=dict(type='table'))
+tabla6a.update_traces(header_font_family= "Montserrat", selector=dict(type='table'))
+tabla6a.update_traces(header_font_size=9, selector=dict(type='table'))
+tabla6a.update_traces(header_font_color="white", selector=dict(type='table'))
+tabla6a.update_traces(header_line_color='rgba(255,255,255,0)', selector=dict(type='table'))
+
+#cells
+tabla6a.update_traces(cells_font_size=15, selector=dict(type='table'))
+tabla6a.update_traces(cells_font_color= "white", selector=dict(type='table'))
+tabla6a.update_traces(cells_font_family= 'Montserrat ExtraBold',  selector=dict(type='table'))
+tabla6a.update_traces(cells_fill_color = '#284740', selector =dict(type="table"))
+tabla6a.update_traces(hoverlabel_namelength=13, selector=dict(type='table'))
+tabla6a.update_traces(cells_line_color= "rgba(255,255,255,0)", selector=dict(type='table'))
+
+tabla6a.update_layout(paper_bgcolor='rgba(255,255,255,0)', #color de fondo
+                    plot_bgcolor='rgba(255,255,255,0)',
+                    #line_color = 'rgba(255,255,255,0)'
+                    )
+
+
+
+
+
+
+
+
 
 
 
@@ -377,10 +452,8 @@ app.title=tabtitle
 app.layout = html.Div(children=[
     
     html.Div(children = [ dcc.Markdown(''' 
-    
-    
     # COVID-19 en México
-    ###### febrero de 2021
+    ###### Cámara de Diputados, México, 17 de febrero de 2021
     
     ''',)],style={'font-family': 'Montserrat',# 'sans-serif',
                   'textAlign': 'center','color': colors['text'],'width': '100%',
@@ -419,18 +492,23 @@ app.layout = html.Div(children=[
                      #'fontColor': 'goldenrod' #Cambia tipo de letra
                     }),
 
-      
-    
-    
-
+ 
 # Quinta franja
     
     html.Div(children = [dcc.Graph(figure=tabla6)],
-             style={'margin': '-55% 0px -50% 80px', 'width':'100%',  #margen: arriba,derecha,abajo,izquierda
+             style={'margin': '-41.8% 0px -50% 55px', 'width':'100%',  #margen: arriba,derecha,abajo,izquierda
                                                                                                     
                     'font-family': 'Montserrat'}),
                    
+ 
 
+# Sexta franja
+    
+    html.Div(children = [dcc.Graph(figure=tabla6a)],
+             style={'margin': '-11.8% 0px 0% 55px', 'width':'100%',  #margen: arriba,derecha,abajo,izquierda
+                                                                                                    
+                    'font-family': 'Montserrat'}),
+                   
     
 
 #############################################################      
@@ -448,3 +526,10 @@ app.layout = html.Div(children=[
 
 if __name__ == '__main__':
     app.run_server()
+
+
+
+
+# autosize=True,
+# Elegir colores CSS
+#https://developer.mozilla.org/es/docs/Web/CSS/CSS_Colors/Herramienta_para_seleccionar_color
