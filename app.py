@@ -683,11 +683,11 @@ app.layout = html.Div(children=[
     html.Div(children = [dcc.Graph(figure=tabla6)],
              style={
             # para celular
-                 #'margin': '-63.6% 0px -50% 55px', 'width':'100%',  #margen: arriba,derecha,abajo,izquierda
+                 'margin': '-63.6% 0px -50% 55px', 'width':'100%',  #margen: arriba,derecha,abajo,izquierda
             # para web 
            #Jupyter      #'margin': '-8.8% 0px -20% 0px', 'width':'100%',                                                                             
                 #Heroku:
-                'margin': '-41.8% 0px -50% 55px', 'width':'100%',                                                                             
+                #'margin': '-41.8% 0px -50% 55px', 'width':'100%',                                                                             
                     'font-family': 'Montserrat'}),
                       
     
