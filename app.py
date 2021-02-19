@@ -506,7 +506,9 @@ tabla8.update_layout(paper_bgcolor='rgba(255,255,255,0)', #color de fondo
                     plot_bgcolor='rgba(255,255,255,0)',
                     #line_color = 'rgba(255,255,255,0)'
                     )
- 
+
+
+
 ############################### 3 Cintillo meses DECESOS (MEAN)
 patabla8a = {#COLUMNS        #FILAS
             #'    '        : ['Contagios'],#, 'Decesos'],
@@ -568,27 +570,30 @@ g10edosc = go.Figure()
 g10edosc.add_trace(go.Bar(x=contaedos['total'],y=contaedos['Nom_Ent'],
                           orientation='h',
                 #name='Contagios confirmados COVID-19',
-                          marker_color='#0776a8',  # cambiar nuemeritos de rgb
+                          marker_color='#EF1804',
                          ))
 g10edosc.update_layout(
     paper_bgcolor='rgba(0,0,0,0)',
     plot_bgcolor='rgba(0,0,0,0)',
     xaxis_tickangle=-45,
     template = 'simple_white',
-    title='10 entidades con mayor contagios',
+    title='Entidades con mas contagios',
+    font_color= 'black',
     xaxis_tickfont_size= 9,
+    #xaxis_tickfont_color= "goldenrod",
     yaxis=dict(
-        title='',
+        #title='',
         titlefont_size=9,
         tickfont_size=10,
-        titlefont_family= "Monserrat"))
+        titlefont_family= "Monserrat  ExtraBold",
+        ))
 
 
 ############################### Gráfica DECESOS por estado
 g10edosd = go.Figure()
 g10edosd.add_trace(go.Bar(x=deceedos['total'],y=contaedos['Nom_Ent'],
                 #name='Contagios confirmados COVID-19',
-                marker_color='#0776a8',
+                marker_color='#7B091E',
                 orientation='h'          
                 # cambiar nuemeritos de rgb
                 ))
@@ -597,13 +602,14 @@ g10edosd.update_layout(
     plot_bgcolor='rgba(0,0,0,0)',
     xaxis_tickangle=-45,
     template = 'simple_white',
-    title='10 entidades con mayor decesos',
+    title='Entidades con mas decesos',
+    font_color= 'black',
     xaxis_tickfont_size= 9,
     yaxis=dict(
         title='',
         titlefont_size=9,
         tickfont_size=10,
-        titlefont_family= "Monserrat"))
+        titlefont_family= "Monserrat ExtraBold"))
 ####### W19.18022021.6
 
 
@@ -702,7 +708,11 @@ app.layout = html.Div(children=[
                      'font-family': 'Montserrat', 
                      #'fontColor': 'goldenrod' #Cambia tipo de letra
                     }),
-        
+
+    
+    
+    
+    
 # Cintillo 1 abajo de la gráfica decesos
     html.Div(children = [dcc.Graph(figure=tabla6a)],
              style={#
@@ -712,45 +722,71 @@ app.layout = html.Div(children=[
                     'margin': '-10.6% 0px 0% 0px', 'width':'100%',                                                                                   
                     'font-family': 'Montserrat'}),
                    
-# Quinta franja (Gráfica de Contagios y Deccesos)  
+
+    
+    
+    
+    
+    
+    
+# Quinta franja (Gráfica de Contagios 10 entidades
 ####### W19.18022021.7    
     html.Div( children = [dcc.Graph(figure=g10edosc)],                 
-             style = {'margin': '-20% 0px 0px 0px', 'width':'50%',
+             style = {'margin': '0% 0px 10px 0px', 'width':'50%',
                      'font-family': 'Montserrat', 
                      #'fontColor': 'goldenrod' #Cambia tipo de letra
                     }),
-    html.Div( children = [dcc.Graph(figure=g10edosd)],                  
-             style = {'margin': '-20% 0px 0px 0px', 'width':'50%',
-                     'font-family': 'Montserrat', 
-                     #'fontColor': 'goldenrod' #Cambia tipo de letra
-                    }),
+
     
-# Séptima franja
+# Sexta franja (Gráfica de Decesos 10 entidades 
+    html.Div( children = [dcc.Graph(figure=g10edosd)],                  
+             style = {'margin': '0% 0px 10px 0px', 'width':'50%',
+                     'font-family': 'Montserrat', 
+                     #'fontColor': 'goldenrod' #Cambia tipo de letra
+                    }),
+
+
+    
+#Cintillos de promedios
+    
+# Séptima franja (promedio contagios)
     html.Div(children='Promedio de contagios mensuales',
               style={
-                  'textAlign': 'center',
+                  'textAlign': 'left',
                   'font-family': 'Montserrat',
                   'color': 'brown',
-                  'margin': '0% 0px 0% 0px', 'width':'100%',
+                  'margin': '0% 0px 0% 0px', 'width':'100%',  
     }),
+                  
+# Séptima franja (promedio decesos)
     
     html.Div(children = [dcc.Graph(figure=tabla8)],
-             style={'margin': '-5% 0px 0% 55px', 'width':'100%',  
-                                                                                                    
-                    'font-family': 'Montserrat'}),
-
+             style={
+                  'textAlign': 'left',
+                  'font-family': 'Montserrat',
+                  'color': 'brown',
+                  'margin': '-8% 0px 0% 0px', 'width':'100%',  
+    }),
+    
+    
 # Octava franja
      html.Div(children='Promedio de decesos mensuales',
               style={
-                  'textAlign': 'center',
+                  'textAlign': 'left',
                   'font-family': 'Montserrat',
                   'color': 'brown',
-                  'margin': '-20% 0px 0% 0px', 'width':'100%',  
+                  'margin': '-10% 0px 0% 0px', 'width':'100%',  
     }),
     
     html.Div(children = [dcc.Graph(figure=tabla8a)],
-             style={'margin': '-25% 0px 0% 55px', 'width':'100%',                                                                        
-                    'font-family': 'Montserrat'}),
+             style={
+                  'textAlign': 'left',
+                  'font-family': 'Montserrat',
+                  'color': 'brown',
+                  'margin': '-10% 0px 0% 0px', 'width':'100%',  
+    }),
+    
+    
 ####### W19.18022021.8 
     
     
