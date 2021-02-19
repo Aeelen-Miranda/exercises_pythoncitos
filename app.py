@@ -667,13 +667,13 @@ app.layout = html.Div(children=[
 
        
 # Primera franja (Total contagios)
-    html.Div(children = [dcc.Graph(figure=tabla2)],
+    html.Div(children = [dcc.Graph(figure=tabla2)], # Cintillo contagios total
              style={'margin': '0% 0px -500px 70px', 'width':'50%',  #margen: arriba,derecha,abajo,izquierda
                                                                                                     
                     'font-family': 'Montserrat'}),
                    
 # Segunda franja (Gráfica contagios)
-    html.Div( children = [dcc.Graph(figure=figaro)],                  
+    html.Div( children = [dcc.Graph(figure=figaro)], #Grafica contagios                  
              style = {'margin': '0% 0px 0px 0px', 'width':'100%',
                      'font-family': 'Montserrat', 
                      #'fontColor': 'goldenrod' #Cambia tipo de letra
@@ -685,16 +685,11 @@ app.layout = html.Div(children=[
             # para celular
                  #'margin': '-63.6% 0px -50% 55px', 'width':'100%',  #margen: arriba,derecha,abajo,izquierda
             # para web 
-                 'margin': '-8.8% 0px -20% 0px', 'width':'100%',                                                                             
-                #
-               #  'margin': '-41.8% 0px -50% 55px', 'width':'100%',                                                                             
+           #Jupyter      #'margin': '-8.8% 0px -20% 0px', 'width':'100%',                                                                             
+                #Heroku:
+                'margin': '-41.8% 0px -50% 55px', 'width':'100%',                                                                             
                     'font-family': 'Montserrat'}),
-                   
- 
-    
-
-    
-    
+                      
     
 # Tercera franja (Total decesos)
     html.Div(children = [dcc.Graph(figure=tabla2a)],
@@ -723,10 +718,6 @@ app.layout = html.Div(children=[
                     'font-family': 'Montserrat'}),
                    
 
-    
-    
-    
-    
     
     
 # Quinta franja (Gráfica de Contagios 10 entidades
