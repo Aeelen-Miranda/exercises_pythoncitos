@@ -1,26 +1,41 @@
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
+import dash_bootstrap_components as dbc
+
 import plotly.graph_objs as go
 import plotly.express as px
 from plotly.subplots import make_subplots
 import plotly.io as pio
 import numpy as np
 import pandas as pd
+import dash_table
+import sidetable as stb
+import datetime
+from datetime import datetime, timedelta
+from datetime import date
+
+
+yesterday = datetime.now() - timedelta(1)
+yea = datetime.strftime(yesterday, '%Y%m%d')
+
+today = date.today()
+d2 = today.strftime("Fecha de actualización : %d de %B de %Y")
+
+
+
+
 
 
 ###############################
 # DATABASES
 ############################### Abre archivos
 
-zacatecas = pd.read_csv('https://raw.githubusercontent.com/fdealbam/flying-dog-beers/master/Tabla%202.%20Delitos%20Zacatecas%20(2020)_2.csv', )
-covid = pd.read_csv("https://raw.githubusercontent.com/fdealbam/flying-dog-beers/master/cdmx_deaths.csv")
-bullet = pd.read_csv("https://raw.githubusercontent.com/fdealbam/flying-dog-beers/master/Tabla%20bullets.csv", encoding= "Latin1")
-
 base = pd.read_csv('https://raw.githubusercontent.com/winik-pg/exercises_pythoncitos/master/mun_p1_cvegeo.csv', encoding='latin-1', usecols=['Nom_Ent','nom_mun','cve_ent_mun1','cve_ent_mun2'])
-contagios = pd.read_csv("https://datos.covid-19.conacyt.mx/Downloads/Files/Casos_Diarios_Municipio_Confirmados_20210218.csv")
-decesos = pd.read_csv("https://datos.covid-19.conacyt.mx/Downloads/Files/Casos_Diarios_Municipio_Defunciones_20210218.csv")
-
+contagios = pd.read_csv("https://datos.covid-19.conacyt.mx/Downloads/Files/Casos_Diarios_Municipio_Confirmados_%s.csv" %(yea))
+decesos = pd.read_csv("https://datos.covid-19.conacyt.mx/Downloads/Files/Casos_Diarios_Municipio_Defunciones_%s.csv" %(yea))
+SS = ('https://datos.covid-19.conacyt.mx/')
+autores = ('https://raw.githubusercontent.com/winik-pg/exercises_pythoncitos/master/Autores.docx')
 
 
 
@@ -67,6 +82,7 @@ cont_nov20 = contagios2[(contagios2.days.dt.year == 2020 ) & (contagios2.days.dt
 cont_dic20 = contagios2[(contagios2.days.dt.year == 2020 ) & (contagios2.days.dt.month == 12)]
 cont_ene21 = contagios2[(contagios2.days.dt.year == 2021 ) & (contagios2.days.dt.month == 1)]
 cont_feb21 = contagios2[(contagios2.days.dt.year == 2021 ) & (contagios2.days.dt.month == 2)]
+#cont_mar21 = contagios2[(contagios2.days.dt.year == 2021 ) & (contagios2.days.dt.month == 3)]
 
 
 # Summarize by months 
@@ -83,8 +99,11 @@ contagios_nov20 = cont_nov20.cases.sum()
 contagios_dic20 = cont_dic20.cases.sum()
 contagios_ene21 = cont_ene21.cases.sum()
 contagios_feb21 = cont_feb21.cases.sum()
+#contagios_mar21 = cont_mar21.cases.sum()
+
+
+
 #means
-####### W19.18022021.1
 contagios_feb20_prom = round(cont_feb20.cases.mean())
 contagios_mar20_prom = round(cont_mar20.cases.mean())
 contagios_abr20_prom = round(cont_abr20.cases.mean())
@@ -98,7 +117,9 @@ contagios_nov20_prom = round(cont_nov20.cases.mean())
 contagios_dic20_prom = round(cont_dic20.cases.mean())
 contagios_ene21_prom = round(cont_ene21.cases.mean())
 contagios_feb21_prom = round(cont_feb21.cases.mean())
-####### W19.18022021.2
+#contagios_mar21_prom = round(cont_mar21.cases.mean())
+
+
 
 ###############################   Contagios por dia  
 
@@ -131,6 +152,10 @@ dec_nov20 = decesos2[(decesos2.days.dt.year == 2020 ) & (decesos2.days.dt.month 
 dec_dic20 = decesos2[(decesos2.days.dt.year == 2020 ) & (decesos2.days.dt.month == 12)]
 dec_ene21 = decesos2[(decesos2.days.dt.year == 2021 ) & (decesos2.days.dt.month == 1)]
 dec_feb21 = decesos2[(decesos2.days.dt.year == 2021 ) & (decesos2.days.dt.month == 2)]
+#dec_mar21 = decesos2[(decesos2.days.dt.year == 2021 ) & (decesos2.days.dt.month == 3)]
+
+
+
 #sum
 decesos_feb20 = dec_feb20.cases.sum()
 decesos_mar20 = dec_mar20.cases.sum()
@@ -145,8 +170,10 @@ decesos_nov20 = dec_nov20.cases.sum()
 decesos_dic20 = dec_dic20.cases.sum()
 decesos_ene21 = dec_ene21.cases.sum()
 decesos_feb21 = dec_feb21.cases.sum()
+#decesos_mar21 = dec_mar21.cases.sum()
+
+
 #means
-####### W19.18022021.3
 #decesos_feb20_prom = round(dec_feb20.cases.mean()) 
 decesos_mar20_prom = round(dec_mar20.cases.mean())
 decesos_abr20_prom = round(dec_abr20.cases.mean())
@@ -160,10 +187,12 @@ decesos_nov20_prom = round(dec_nov20.cases.mean())
 decesos_dic20_prom = round(dec_dic20.cases.mean())
 decesos_ene21_prom = round(dec_ene21.cases.mean())
 decesos_feb21_prom = round(dec_feb21.cases.mean())
-####### W19.18022021.4
+#decesos_mar21_prom = round(dec_mar21.cases.mean())
+
+
 
 ############################### contagios totales por estado
-####### W19.18022021 
+
 onlyc = contagios.iloc[:,3:]
 contagios['total'] = onlyc.sum(1)
 #create 'total' column
@@ -171,10 +200,25 @@ contagios['total']=contagios['total'].astype(int)
 #merge base-contagios
 cont= pd.merge(base,contagios, left_on= ["cve_ent_mun1"], right_on =["cve_ent"], how='inner')
 #group by edos, sort and show
-contaedos = pd.DataFrame(cont.groupby(['Nom_Ent'])['total'].sum()).sort_values('total', ascending=False).head(10)
-contaedos.to_csv('0000proceso.csv')
+contaedos1 = pd.DataFrame(cont.groupby(['Nom_Ent'])['total','poblacion'].sum()).sort_values('total', ascending=False)
+contaedos1.to_csv('0000proceso.csv')
 contaedo = pd.read_csv('0000proceso.csv')
-contaedos = contaedo.sort_values('total', ascending=True)
+contaedos = contaedo.sort_values('total', ascending=True).tail(10)
+
+
+
+############################### contagios (tasas) por estado 
+
+contaedos1['tasa']=((contaedos1.total/contaedos1.poblacion)*100000).round(2)
+contaedos2=contaedos1.sort_values('tasa', ascending=True)
+contaedos2.to_csv('0000proceso.csv')
+contaedo2a = pd.read_csv('0000proceso.csv')
+contaedos2a = contaedo2a.sort_values('tasa', ascending=True).tail(10)
+
+#para pie chart Contagios
+contaedog = contaedo.stb.freq(['Nom_Ent'],value='total', thresh=60, other_label="Resto del país")
+
+
 
 
 ############################### decesos totales por estado
@@ -185,11 +229,27 @@ decesos['total']=decesos['total'].astype(int)
 #merge
 dec= pd.merge(base,decesos, left_on= ["cve_ent_mun1"], right_on =["cve_ent"], how='inner')
 #group by edos
-deceedos = pd.DataFrame(dec.groupby(['Nom_Ent'])['total'].sum()).sort_values('total', ascending=False).head(10)
-deceedos.to_csv('0000proceso.csv')
+deceedos1 = pd.DataFrame(dec.groupby(['Nom_Ent'])['total','poblacion'].sum()).sort_values('total', ascending=False)
+deceedos1.to_csv('0000proceso.csv')
 deceedo = pd.read_csv('0000proceso.csv')
-deceedos = deceedo.sort_values('total', ascending=True)
+deceedos = deceedo.sort_values('total', ascending=True).tail(10)
 ####### W19.18022021 
+
+############################### decesos (tasas) por estado
+deceedos1['tasa']=((deceedos1.total/deceedos1.poblacion)*100000).round(2)
+deceedos2= deceedos1.sort_values('tasa', ascending=True).tail(10)
+deceedos2.to_csv('0000proceso.csv')
+deceedos2a = pd.read_csv('0000proceso.csv')
+
+#para pie chart Decesos
+deceedosg = deceedos.stb.freq(['Nom_Ent'],value='total', thresh=60, other_label="Resto del país")
+
+
+
+
+
+
+
 
 
 
@@ -198,13 +258,17 @@ deceedos = deceedo.sort_values('total', ascending=True)
 ###############################
 
 
+
+
+
 ############################### 1 Contagios Graph 
 
 figaro = go.Figure()
 figaro.add_trace(go.Bar(x=contagios2['days'],y=contagios2['cases'],
                 #name='Contagios confirmados COVID-19',
-                marker_color='#0776a8'  # cambiar nuemeritos de rgb
+                marker_color='firebrick'  # cambiar nuemeritos de rgb
                 ))
+
 figaro.update_layout(
     paper_bgcolor='rgba(0,0,0,0)',
     plot_bgcolor='rgba(0,0,0,0)',
@@ -216,7 +280,11 @@ figaro.update_layout(
         title='Contagios diarios',
         titlefont_size=14,
         tickfont_size=12,
-        titlefont_family= "Monserrat"))
+        titlefont_family= "Monserrat"),
+    autosize=True,
+    width=1000,
+    height=400
+    )
 
 
 
@@ -225,7 +293,7 @@ figaro.update_layout(
 figaro2 = go.Figure()
 figaro2.add_trace(go.Bar(x=decesos2['days'],y=decesos2['cases'],
                 #name='Contagios confirmados COVID-19',
-                marker_color='#0776a8'  # cambiar nuemeritos de rgb
+                marker_color='slategray'  # cambiar nuemeritos de rgb
                 ))
 figaro2.update_layout(
     paper_bgcolor='rgba(0,0,0,0)',
@@ -238,13 +306,15 @@ figaro2.update_layout(
         title='Decesos diarios',
         titlefont_size=14,
         tickfont_size=12,
-        titlefont_family= "Monserrat"))
+        titlefont_family= "Monserrat"),
+    autosize=True,
+    width=1000,
+    height=400
+    )
 
 
 
-
-############################### 1 Cintillo 1  
-#Tabla de titulos     
+############################### 1 Titulo Contagios totales 
     
 patabla2 = {'Contagios': [str(f"{contagiostotal:,d}")] }
 patabla3 = pd.DataFrame (patabla2)
@@ -272,7 +342,7 @@ tabla2.update_traces(header_line_color="#e3e3e3", selector=dict(type='table'))
 
 #cells
 tabla2.update_traces(cells_font_size=50, selector=dict(type='table'))
-tabla2.update_traces(cells_font_color= "goldenrod", selector=dict(type='table'))
+tabla2.update_traces(cells_font_color= "red", selector=dict(type='table'))
 tabla2.update_traces(cells_font_family= 'Montserrat ExtraBold',  selector=dict(type='table'))
 tabla2.update_traces(cells_fill_color = 'rgba(227,227,227,0.5)', selector =dict(type="table"))
 tabla2.update_traces(hoverlabel_namelength=80, selector=dict(type='table'))
@@ -280,12 +350,19 @@ tabla2.update_traces(cells_line_color= "#e3e3e3", selector=dict(type='table'))
 
 tabla2.update_layout(paper_bgcolor='rgba(227,227,227,0.5)', #color de fondo
                     plot_bgcolor='rgba(227,227,227,0.5)',
-                    )
+                        autosize=True,
+                        width=1000,
+                        height=400
+                        )
 
 
-############################### 1 Cintillo 2  
-#Tabla de titulos     
-    
+
+
+
+
+############################### 2 Titulo Decesos totales
+
+
 patabla2a = {'Decesos': [str(f"{decesos_tot:,d}") ] }
 patabla3a = pd.DataFrame (patabla2a)
 
@@ -312,7 +389,7 @@ tabla2a.update_traces(header_line_color="#e3e3e3", selector=dict(type='table'))
 
 #cells
 tabla2a.update_traces(cells_font_size=50, selector=dict(type='table'))
-tabla2a.update_traces(cells_font_color= "goldenrod", selector=dict(type='table'))
+tabla2a.update_traces(cells_font_color= "black", selector=dict(type='table'))
 tabla2a.update_traces(cells_font_family= 'Montserrat ExtraBold',  selector=dict(type='table'))
 tabla2a.update_traces(cells_fill_color = 'rgba(227,227,227,0.5)', selector =dict(type="table"))
 tabla2a.update_traces(hoverlabel_namelength=80, selector=dict(type='table'))
@@ -320,16 +397,19 @@ tabla2a.update_traces(cells_line_color= "#e3e3e3", selector=dict(type='table'))
 
 tabla2a.update_layout(paper_bgcolor='rgba(227,227,227,0.5)', #color de fondo
                     plot_bgcolor='rgba(227,227,227,0.5)',
+                    autosize=True,
+                    width=1000,
+                    height=400
                     )
 
+                    
 
 
-############
 
-############################### 3 Cintillo meses CONTAGIOS
 
-patabla6 = {#COLUMNS        #FILAS
-            #'    '        : ['Contagios'],#, 'Decesos'],
+############################### 1 Cintillo CONTAGIOS mensuales
+
+patabla6 = {
             'febrero20'   : [str(f"{contagios_feb20:,d}")],#, decesos_feb20],
             'marzo20'     : [str(f"{contagios_mar20:,d}")],#, decesos_mar20],
             'abril20'     : [str(f"{contagios_abr20:,d}")],#, decesos_abr20],
@@ -346,7 +426,6 @@ patabla6 = {#COLUMNS        #FILAS
                             }
 
 
-
 patabla7 = pd.DataFrame (patabla6, columns = [#'blanc',
                                               'febrero20','marzo20','abril20','mayo20','junio20','julio20',
                                               'agosto20','septiembre20','octubre20','noviembre20','diciembre20',
@@ -356,24 +435,23 @@ tabla6 = go.Figure(data=[go.Table(
                 align=['left']),
                 columnwidth = 2,
     
-    cells=dict(values=[#patabla7.blanc,
+    cells=dict(values=[
                        patabla7.febrero20,patabla7.marzo20,patabla7.abril20,patabla7.mayo20,patabla7.junio20,patabla7.julio20,
                        patabla7.agosto20,patabla7.septiembre20,patabla7.octubre20,patabla7.noviembre20,patabla7.diciembre20,
                        patabla7.enero21,patabla7.febrero21],
-               # fill_color='#e3e3e3',
                font_size=2,
                height= 25,
                align='left'),)])
 #HEADER
 tabla6.update_traces(header_fill_color='#284740', selector=dict(type='table'))
 tabla6.update_traces(header_font_family= "Montserrat", selector=dict(type='table'))
-tabla6.update_traces(header_font_size=9, selector=dict(type='table'))
+tabla6.update_traces(header_font_size=8, selector=dict(type='table'))
 tabla6.update_traces(header_font_color="white", selector=dict(type='table'))
 tabla6.update_traces(header_line_color='rgba(255,255,255,0)', selector=dict(type='table'))
 
 #cells
-tabla6.update_traces(cells_font_size=15, selector=dict(type='table'))
-tabla6.update_traces(cells_font_color= "white", selector=dict(type='table'))
+tabla6.update_traces(cells_font_size=14, selector=dict(type='table'))
+tabla6.update_traces(cells_font_color= "lavenderblush", selector=dict(type='table'))
 tabla6.update_traces(cells_font_family= 'Montserrat ExtraBold',  selector=dict(type='table'))
 tabla6.update_traces(cells_fill_color = '#284740', selector =dict(type="table"))
 tabla6.update_traces(hoverlabel_namelength=13, selector=dict(type='table'))
@@ -382,19 +460,19 @@ tabla6.update_traces(cells_line_color= "rgba(255,255,255,0)", selector=dict(type
 tabla6.update_layout(paper_bgcolor='rgba(255,255,255,0)', #color de fondo
                     plot_bgcolor='rgba(255,255,255,0)',
                     #line_color = 'rgba(255,255,255,0)'
-                    )
+    autosize=True,
+    width=1000,
+    height=400
+    )
 
 
 
 
 
 
-############
+############################### 2 Cintillo DECESOS mensuales
 
-############################### 3 Cintillo meses DECESOS
-
-patabla6a = {#COLUMNS        #FILAS
-            #'    '        : ['Contagios'],#, 'Decesos'],
+patabla6a = {
             'febrero20'   : [str(f"{decesos_feb20:,d}")],#, decesos_feb20],
             'marzo20'     : [str(f"{decesos_mar20:,d}")],#, decesos_mar20],
             'abril20'     : [str(f"{decesos_abr20:,d}")],#, decesos_abr20],
@@ -410,9 +488,7 @@ patabla6a = {#COLUMNS        #FILAS
             'febrero21'   : [str(f"{decesos_feb21:,d}")],#, decesos_feb21],
                             }
 
-
-
-patabla7a = pd.DataFrame (patabla6a, columns = [#'blanc',
+patabla7a = pd.DataFrame (patabla6a, columns = [
                                               'febrero20','marzo20','abril20','mayo20','junio20','julio20',
                                               'agosto20','septiembre20','octubre20','noviembre20','diciembre20',
                                               'enero21','febrero21'])
@@ -425,22 +501,21 @@ tabla6a = go.Figure(data=[go.Table(
                        patabla7a.febrero20,patabla7a.marzo20,     patabla7a.abril20,patabla7a.mayo20,patabla7a.junio20,patabla7a.julio20,
                        patabla7a.agosto20, patabla7a.septiembre20,patabla7a.octubre20,patabla7a.noviembre20,patabla7a.diciembre20,
                        patabla7a.enero21,  patabla7a.febrero21],
-               # fill_color='#e3e3e3',
                font_size=2,
                height= 25,
                align='left'), 
-               
                )])
+
 #HEADER
 tabla6a.update_traces(header_fill_color='#284740', selector=dict(type='table'))
 tabla6a.update_traces(header_font_family= "Montserrat", selector=dict(type='table'))
-tabla6a.update_traces(header_font_size=9, selector=dict(type='table'))
+tabla6a.update_traces(header_font_size=8, selector=dict(type='table'))
 tabla6a.update_traces(header_font_color="white", selector=dict(type='table'))
 tabla6a.update_traces(header_line_color='rgba(255,255,255,0)', selector=dict(type='table'))
 
 #cells
-tabla6a.update_traces(cells_font_size=15, selector=dict(type='table'))
-tabla6a.update_traces(cells_font_color= "white", selector=dict(type='table'))
+tabla6a.update_traces(cells_font_size=14, selector=dict(type='table'))
+tabla6a.update_traces(cells_font_color= "lavenderblush", selector=dict(type='table'))
 tabla6a.update_traces(cells_font_family= 'Montserrat ExtraBold',  selector=dict(type='table'))
 tabla6a.update_traces(cells_fill_color = '#284740', selector =dict(type="table"))
 tabla6a.update_traces(hoverlabel_namelength=13, selector=dict(type='table'))
@@ -448,14 +523,18 @@ tabla6a.update_traces(cells_line_color= "rgba(255,255,255,0)", selector=dict(typ
 
 tabla6a.update_layout(paper_bgcolor='rgba(255,255,255,0)', #color de fondo
                     plot_bgcolor='rgba(255,255,255,0)',
-                      
                     #line_color = 'rgba(255,255,255,0)'
-                    )
+    autosize=True,
+    width=1000,
+    height=400
+    )
 
-####### W19.18022021.5
-############################### 3 Cintillo meses CONTAGIOS (mean)
-patabla8 = {#COLUMNS        #FILAS
-            #'    '        : ['Contagios'],#, 'Decesos'],
+
+
+
+############################### 3 Cintillo Promedio mensuales de Contagios
+
+patabla8 = {
             'febrero20'   : [str(f"{contagios_feb20_prom:,d}")],#, decesos_feb20],
             'marzo20'     : [str(f"{contagios_mar20_prom:,d}")],#, decesos_mar20],
             'abril20'     : [str(f"{contagios_abr20_prom:,d}")],#, decesos_abr20],
@@ -480,39 +559,42 @@ tabla8 = go.Figure(data=[go.Table(
                 align=['left']),
                 columnwidth = 2,
     
-    cells=dict(values=[#patabla7.blanc,
+    cells=dict(values=[
                        patabla9.febrero20,patabla9.marzo20,patabla9.abril20,patabla9.mayo20,patabla9.junio20,patabla9.julio20,
                        patabla9.agosto20,patabla9.septiembre20,patabla9.octubre20,patabla9.noviembre20,patabla9.diciembre20,
                        patabla9.enero21,patabla9.febrero21],
-               # fill_color='#e3e3e3',
                font_size=2,
                height= 25,
                align='left'),)])
 #HEADER
-tabla8.update_traces(header_fill_color='#284740', selector=dict(type='table'))
+tabla8.update_traces(header_fill_color='#7B878D', selector=dict(type='table'))
 tabla8.update_traces(header_font_family= "Montserrat", selector=dict(type='table'))
-tabla8.update_traces(header_font_size=9, selector=dict(type='table'))
+tabla8.update_traces(header_font_size=8, selector=dict(type='table'))
 tabla8.update_traces(header_font_color="white", selector=dict(type='table'))
 tabla8.update_traces(header_line_color='rgba(255,255,255,0)', selector=dict(type='table'))
 #cells
-tabla8.update_traces(cells_font_size=15, selector=dict(type='table'))
-tabla8.update_traces(cells_font_color= "white", selector=dict(type='table'))
+tabla8.update_traces(cells_font_size=14, selector=dict(type='table'))
+tabla8.update_traces(cells_font_color= "lavenderblush", selector=dict(type='table'))
 tabla8.update_traces(cells_font_family= 'Montserrat ExtraBold',  selector=dict(type='table'))
-tabla8.update_traces(cells_fill_color = '#284740', selector =dict(type="table"))
+tabla8.update_traces(cells_fill_color = '#7B878D', selector =dict(type="table"))
 tabla8.update_traces(hoverlabel_namelength=13, selector=dict(type='table'))
 tabla8.update_traces(cells_line_color= "rgba(255,255,255,0)", selector=dict(type='table'))
 
 tabla8.update_layout(paper_bgcolor='rgba(255,255,255,0)', #color de fondo
                     plot_bgcolor='rgba(255,255,255,0)',
-                    #line_color = 'rgba(255,255,255,0)'
-                    )
+    autosize=True,
+    width=1000,
+    height=400
+    )
 
 
 
-############################### 3 Cintillo meses DECESOS (MEAN)
-patabla8a = {#COLUMNS        #FILAS
-            #'    '        : ['Contagios'],#, 'Decesos'],
-            'febrero20'   : ["0"],#, decesos_feb20],
+
+
+############################### 3 Cintillo Promedio mensuales de Decesos
+
+patabla8a = {
+            'febrero20'   : ["0"], #, decesos_feb20],
             'marzo20'     : [str(f"{decesos_mar20_prom:,d}")],#, decesos_mar20],
             'abril20'     : [str(f"{decesos_abr20_prom:,d}")],#, decesos_abr20],
             'mayo20'      : [str(f"{decesos_may20_prom:,d}")],#, decesos_may20],
@@ -527,10 +609,11 @@ patabla8a = {#COLUMNS        #FILAS
             'febrero21'   : [str(f"{decesos_feb21_prom:,d}")],#, decesos_feb21],
                             }
 
-patabla9a = pd.DataFrame (patabla8a, columns = [#'blanc',
+patabla9a = pd.DataFrame (patabla8a, columns = [
                                               'febrero20','marzo20','abril20','mayo20','junio20','julio20',
                                               'agosto20','septiembre20','octubre20','noviembre20','diciembre20',
                                               'enero21','febrero21'])
+
 tabla8a = go.Figure(data=[go.Table(
     header=dict(values=list(patabla8a),
                 align=['left']),
@@ -540,60 +623,78 @@ tabla8a = go.Figure(data=[go.Table(
                        patabla9a.febrero20,patabla9a.marzo20,patabla9a.abril20,patabla9a.mayo20,patabla9a.junio20,patabla9a.julio20,
                        patabla9a.agosto20,patabla9a.septiembre20,patabla9a.octubre20,patabla9a.noviembre20,patabla9a.diciembre20,
                        patabla9a.enero21,patabla9a.febrero21],
-               # fill_color='#e3e3e3',
                font_size=2,
                height= 25,
                align='left'),)])
 #HEADER
-tabla8a.update_traces(header_fill_color='#284740', selector=dict(type='table'))
+tabla8a.update_traces(header_fill_color='#7B878D', selector=dict(type='table'))
 tabla8a.update_traces(header_font_family= "Montserrat", selector=dict(type='table'))
-tabla8a.update_traces(header_font_size=9, selector=dict(type='table'))
+tabla8a.update_traces(header_font_size=8, selector=dict(type='table'))
 tabla8a.update_traces(header_font_color="white", selector=dict(type='table'))
 tabla8a.update_traces(header_line_color='rgba(255,255,255,0)', selector=dict(type='table'))
 
 #cells
-tabla8a.update_traces(cells_font_size=15, selector=dict(type='table'))
-tabla8a.update_traces(cells_font_color= "white", selector=dict(type='table'))
+tabla8a.update_traces(cells_font_size=14, selector=dict(type='table'))
+tabla8a.update_traces(cells_font_color= "lavenderblush", selector=dict(type='table'))
 tabla8a.update_traces(cells_font_family= 'Montserrat ExtraBold',  selector=dict(type='table'))
-tabla8a.update_traces(cells_fill_color = '#284740', selector =dict(type="table"))
+tabla8a.update_traces(cells_fill_color = '#7B878D', selector =dict(type="table"))
 tabla8a.update_traces(hoverlabel_namelength=13, selector=dict(type='table'))
 tabla8a.update_traces(cells_line_color= "rgba(255,255,255,0)", selector=dict(type='table'))
 
 tabla8a.update_layout(paper_bgcolor='rgba(255,255,255,0)', #color de fondo
                     plot_bgcolor='rgba(255,255,255,0)',
-                    #line_color = 'rgba(255,255,255,0)'
-                    )
+    autosize=True,
+    width=1000,
+    height=400
+    )
 
+
+
+
+
+
+##############
+# SEGUNDA SECCION 
 
 ############################### Gráfica CONTAGIOS por estado
+
 g10edosc = go.Figure()
 g10edosc.add_trace(go.Bar(x=contaedos['total'],y=contaedos['Nom_Ent'],
                           orientation='h',
                 #name='Contagios confirmados COVID-19',
-                          marker_color='#EF1804',
+                          marker_color='firebrick',
+                          #align= 'center',
+
                          ))
 g10edosc.update_layout(
     paper_bgcolor='rgba(0,0,0,0)',
     plot_bgcolor='rgba(0,0,0,0)',
     xaxis_tickangle=-45,
     template = 'simple_white',
-    title='Entidades con mas contagios',
-    font_color= 'black',
-    xaxis_tickfont_size= 9,
-    #xaxis_tickfont_color= "goldenrod",
+    title='Contagios',
+    title_font_family= 'Monserrat ExtraBold',
+    title_font_color= 'gray',
+    title_font_size= 22,
+    xaxis_tickfont_size= 3,
     yaxis=dict(
-        #title='',
-        titlefont_size=9,
-        tickfont_size=10,
-        titlefont_family= "Monserrat  ExtraBold",
-        ))
+        titlefont_size=80,
+        tickfont_size= 10,
+        titlefont_family= 'Monserrat ExtraBold',
+        ),
+     
+     autosize=True,
+     width= 300,
+     height=350
+                     )
 
 
-############################### Gráfica DECESOS por estado
+
+############################### Gráfica decesos por estado
+
 g10edosd = go.Figure()
 g10edosd.add_trace(go.Bar(x=deceedos['total'],y=contaedos['Nom_Ent'],
                 #name='Contagios confirmados COVID-19',
-                marker_color='#7B091E',
+                marker_color='black',
                 orientation='h'          
                 # cambiar nuemeritos de rgb
                 ))
@@ -602,15 +703,132 @@ g10edosd.update_layout(
     plot_bgcolor='rgba(0,0,0,0)',
     xaxis_tickangle=-45,
     template = 'simple_white',
-    title='Entidades con mas decesos',
-    font_color= 'black',
+    title='Decesos',
+    title_font_family= 'Monserrat ExtraBold',
+    title_font_color= 'gray',
+    title_font_size= 22,
     xaxis_tickfont_size= 9,
     yaxis=dict(
         title='',
-        titlefont_size=9,
+        titlefont_size=8,
         tickfont_size=10,
-        titlefont_family= "Monserrat ExtraBold"))
-####### W19.18022021.6
+        titlefont_family= 'Monserrat ExtraBold'),
+    autosize=True,
+    width= 300,
+    height=350
+                     )
+
+
+
+############################### Gráfica TASA de contagios por estado
+
+g10edosct = go.Figure()
+g10edosct.add_trace(go.Bar(x=contaedos2a['tasa'],y=contaedos2a['Nom_Ent'],
+                          orientation='h',
+                #name='Contagios confirmados COVID-19',
+                          marker_color='palevioletred',
+                         ))
+g10edosct.update_layout(
+    paper_bgcolor='rgba(0,0,0,0)',
+    plot_bgcolor='rgba(0,0,0,0)',
+    xaxis_tickangle=-45,
+    template = 'simple_white',
+    title='Tasa /100k',
+    title_font_family= 'Monserrat ExtraBold',
+    title_font_color= 'gray',
+    title_font_size= 22,
+    xaxis_tickfont_size= 9,
+    #xaxis_tickfont_color= "goldenrod",
+     yaxis=dict(
+        title='',
+        titlefont_size=8,
+        tickfont_size=10,
+        titlefont_family= 'Monserrat ExtraBold'),
+    autosize=True,
+    width= 300,
+    height=350
+                     )
+
+
+
+
+############################### Gráfica TASA de decesos por estado
+    
+g10edosdt = go.Figure()
+g10edosdt.add_trace(go.Bar(x=deceedos2a['tasa'],y=contaedos2a['Nom_Ent'],
+                #name='Contagios confirmados COVID-19',
+                marker_color='slategray',
+                orientation='h'          
+                # cambiar nuemeritos de rgb
+                ))
+g10edosdt.update_layout(
+    paper_bgcolor='rgba(0,0,0,0)',
+    plot_bgcolor='rgba(0,0,0,0)',
+    xaxis_tickangle=-45,
+    template = 'simple_white',
+    title='Tasa /100k',
+    title_font_family= 'Monserrat ExtraBold',
+    title_font_color= 'gray',
+    title_font_size= 22,
+    xaxis_tickfont_size= 9,
+    yaxis=dict(
+        title='',
+        titlefont_size=8,
+        tickfont_size=10,
+        titlefont_family= 'Monserrat ExtraBold'),
+    autosize=True,
+    width= 300,
+    height=350
+                     )
+
+
+
+############################### Gráfica Pie de Contagios por estado
+
+piec = px.pie(contaedog, values='total', names='Nom_Ent',
+             color_discrete_sequence=px.colors.sequential.Reds,
+             #title='Distribución de contagios',
+             )
+
+piec.update_layout(paper_bgcolor='rgba(0,0,0,0)',
+                  plot_bgcolor='rgba(0,0,0,0)',
+                  uniformtext_minsize=10,
+                  uniformtext_mode='hide',
+                  #font_family= "Monserrat",
+                  autosize=True,
+                  width= 550,
+                  height=550,
+                  title_font_size = 12,
+                  font_color="black",
+                  title_font_color="firebrick",
+                  #title_font_family = 'Monserrat ExtraBold' 
+                   )
+
+
+
+############################### Gráfica Pie de Deceso por estado
+
+pied = px.pie(deceedosg, values='total', names='Nom_Ent',
+             color_discrete_sequence=px.colors.sequential.Greys,
+             #title='      Decesos',
+             #titlefont_size = 15,
+             #font_family = 'Monserrat ExtraBold'
+              
+             )
+
+pied.update_layout(paper_bgcolor='rgba(0,0,0,0)',
+                  plot_bgcolor='rgba(0,0,0,0)',
+                  uniformtext_minsize=12,
+                  uniformtext_mode='hide',
+                  #font_family= "Monserrat",
+                  autosize=True,
+                  width= 425,
+                  height=400,
+                  title_font_size = 15,
+                  font_color="black",
+                  title_font_color="black",
+                  #title_font_family = 'Monserrat ExtraBold' 
+                   )
 
 
 
@@ -626,14 +844,11 @@ g10edosd.update_layout(
 
 ####################################
 
-
-
 ########### Define your variables
-
-mytitle=''
+mytitle=' '
 tabtitle='COVID-19 en México'
-githublink='https://github.com/Aeelen-Miranda/exercises_pythoncitos/blob/master/app.py'
-sourceurl='https://plotly.com/python/histograms/'
+#githublink='https://github.com/Aeelen-Miranda/exercises_pythoncitos/blob/master/app.py'
+sourceurl='https://datos.covid-19.conacyt.mx/'
 
 
 app = dash.Dash()
@@ -650,148 +865,311 @@ app.title=tabtitle
 #################################### TITULOS GENERALES DE APP
 
 app.layout = html.Div(children=[
+    html.I("Esta página se visualiza mejor a una resolución de 720x910",
+           style={'color': '#C0C0C0',
+                  'font-family': 'Montserrat',
+                  #'size' :  3,
+                  'font-size': '8px',
+                  'textAlign': 'center',
+                  'margin': '0% 0px 0% 0px', 'width': '100%'}),
     
-    html.Div(children = [ dcc.Markdown(''' 
-    ###### Secretaría de Servicios Parlamentarios, Cámara de Diputados, México, 17 de febrero de 2021
+    
+    
+#Prueba  
+    
+    html.Div([ 
+        dbc.Col(html.Div("Secretaría de Servicios Parlamentarios, Cámara de Diputados"),
+               md=8, width= "last"),]),
+                                  
+    ###### .
+
+    
+    
+    
+#Titulo 1    
+#    html.Div(children = [ dcc.Markdown(''' 
+#    ###### Secretaría de Servicios Parlamentarios, Cámara de Diputados.
+#    ''',)],style={'font-family': 'Montserrat',# 'sans-serif',
+#                  'textAlign': 'center','color': colors['text'], 
+                  #'height' : '-10px',
+#                  'margin': '0% 0px -2% 0px',
+#                  'interwidth' : -3,
+#                  'width': '100%',
+#                  }, ),  
+
+    
+#titulo 2               
+    html.Div(children = [ dcc.Markdown('''
     # COVID-19 en México
     ''',)],style={'font-family': 'Montserrat',# 'sans-serif',
                   'textAlign': 'center','color': colors['text'], 
                   #'height' : '-10px',
-                  'margin': '0% 0px -1% 0px',
-                  'interwidth' : -1,
+                  'margin': '-1% 0px 0% 0px',
+                  'interwidth' : -3,
                   'width': '100%',
                   }, ), 
     
+#fecha
+    html.Div(children = [ dcc.Markdown(d2)],
+             style={'font-family': 'Montserrat',# 'sans-serif',
+                  'textAlign': 'center','color': colors['text'], 
+                  #'height' : '-10px',
+                  'margin': '-2% 0px 0% 0px',
+                  'interwidth' : -3,
+                  'width': '100%',
+                  'font-size': '9px'
+                  }, ), 
 
 #################################### DISEÑO DE APP
 
-       
-# Primera franja (Total contagios)
-    html.Div(children = [dcc.Graph(figure=tabla2)], # Cintillo contagios total
-             style={'margin': '0% 0px -500px 70px', 'width':'50%',  #margen: arriba,derecha,abajo,izquierda
-                                                                                                    
+################    
+# PRIMERA FRANJA     
+################
+    
+    
+# Franja Cifra total contagios
+    
+    html.Div(children = [dcc.Graph(figure=tabla2)],
+             style={'margin': '0% 0px -500px 70px', 'width':'50%',  
                     'font-family': 'Montserrat'}),
-                   
-# Segunda franja (Gráfica contagios)
-    html.Div( children = [dcc.Graph(figure=figaro)], #Grafica contagios                  
+                  
+
+# Franja Gráfica contagios
+    
+    html.Div( children = [dcc.Graph(figure=figaro)],                  
              style = {'margin': '0% 0px 0px 0px', 'width':'100%',
                      'font-family': 'Montserrat', 
-                     #'fontColor': 'goldenrod' #Cambia tipo de letra
                     }),
 
-# Cintillo 1 abajo de la gráfica contagios
+    
+
+    
+    
+#corregir
+    
+# Cintillo 1 Cifras mensuales de contagios
+    
     html.Div(children = [dcc.Graph(figure=tabla6)],
              style={
             # para celular
-                 'margin': '-63.6% 0px -50% 55px', 'width':'100%',  #margen: arriba,derecha,abajo,izquierda
+                 #'margin': '-63.6% 0px -50% 55px', 'width':'100%',  
             # para web 
-           #Jupyter      #'margin': '-8.8% 0px -20% 0px', 'width':'100%',                                                                             
-                #Heroku:
-                #'margin': '-41.8% 0px -50% 55px', 'width':'100%',                                                                             
+                 'margin': '-18% 0px -20% 0px', 'width':'100%',                                                                             
+                #
+               #  'margin': '-41.8% 0px -50% 55px', 'width':'100%',                                                                             
                     'font-family': 'Montserrat'}),
-                      
-    
-# Tercera franja (Total decesos)
-    html.Div(children = [dcc.Graph(figure=tabla2a)],
-             style={'margin': '0% 0px -500% 70px', 'width':'100%',  #margen: arriba,derecha,abajo,izquierda
-                                                                                                    
-                    'font-family': 'Montserrat'}),
-                   
-# Cuarta franja (Grafica Decesos)
-    html.Div( children = [dcc.Graph(figure=figaro2)],                  
-             style = {'margin': '0% 0px 0% 0px', 'width':'100%',
-                     'font-family': 'Montserrat', 
-                     #'fontColor': 'goldenrod' #Cambia tipo de letra
-                    }),
 
     
     
+## Cintillo 1 titulo (promedio mensuales contagios)
+#    
+#    html.Div(children='Promedio de contagios mensuales',
+#              style={
+#                  'textAlign': 'left',
+#                  'font-family': 'Montserrat ExtraBold',
+#                  "font_size": 16,
+#                  'color': 'brown',
+#                  'margin': '-7% 0px 0% 80px', 'width':'100%',}),  
+#
+#    
+## Cintillo 2 Promedio mensuales de contagios
+#    
+#    html.Div(children = [dcc.Graph(figure=tabla8)],
+#             style={
+#                  'textAlign': 'left',
+#                  'font-family': 'Montserrat',
+#                  'color': 'brown',
+#                  'margin': '-14.2% 0px -10% 0px', 'width':'100%',  
+#    }),
+#    
+# 
+#    
+ 
+################    
+# SEGUNDA FRANJA     
+################
+   
     
+# false  Franja cifra total de decesos
     
-# Cintillo 1 abajo de la gráfica decesos
+    html.Div(children = [dcc.Graph(figure=tabla2a)],
+             style={'margin': '0% 0px 2px 70px', 'width':'50%',  
+                    'font-family': 'Montserrat'}),
+
+        
+# Franja Gráfica de decesos 
+    
+    html.Div( children = [dcc.Graph(figure=figaro2)],                  
+             style = {'margin': '-45% 0px 0px 0px', 'width':'100%',
+                     'font-family': 'Montserrat', 
+                    }),
+
+
+# Cintillo 1 Cifras mensuales de decesos
+    
     html.Div(children = [dcc.Graph(figure=tabla6a)],
              style={#
              # para celular
-                    #'margin': '-18% 0px 0% 55px', 'width':'100%',  #margen: arriba,derecha,abajo,izquierda
+                    #'margin': '-18% 0px 0% 55px', 'width':'100%',
              # para web 
-                    'margin': '-10.6% 0px 0% 0px', 'width':'100%',                                                                                   
+                 'margin': '-21.5% 0px -20% 0px', 'width':'100%',                                                                             
                     'font-family': 'Montserrat'}),
-                   
+    
+    
+## Cintillo 1 titulo (promedio mensuales) Decesos
+#    
+#     html.Div('Promedio de decesos mensuales',
+#              style={
+#                  'textAlign': 'left',
+#                  'font-family': 'Montserrat ExtraBold',
+#                  "font_size": 16,
+#                  'color': 'brown',
+#                  'margin': '-7% 0px 0% 80px', 'width':'100%',} ),
+#
+#
+## Cintillo 2 Cifras promedios mensuales de decesos
+#
+#    html.Div(children = [dcc.Graph(figure=tabla8a)],
+#             style={
+#                  'textAlign': 'left',
+#                  'font-family': 'Montserrat',
+#                  'color': 'brown',
+#                  'margin': '-15% 0px 0% 0px', 'width':'100%',  
+#    }),
+#    
+    
+    
 
     
+
     
-# Quinta franja (Gráfica de Contagios 10 entidades
-####### W19.18022021.7    
+
+    
+
+    
+################    
+# TERCERA FRANJA
+################
+   
+# Cintillo 1 titulo (promedio mensuales) Decesos
+    
+     html.Div('Las 10 entidades con más... ',
+              style={
+                  'textAlign': 'left',
+                  'font-size': 24,
+                  'font-family': 'Montserrat ExtraBold',
+                  'color': '#944C4C',
+                  'margin': '0% 40px -2% 80px', 'width':'100%',} ),
+
+   
+    
+# Franja Gráfica de Contagios 10 entidades
+
     html.Div( children = [dcc.Graph(figure=g10edosc)],                 
-             style = {'margin': '0% 0px 10px 0px', 'width':'50%',
+             style = {'margin': '0% 0px 10px 70px', 'width':'22%',
                      'font-family': 'Montserrat', 
                      #'fontColor': 'goldenrod' #Cambia tipo de letra
                     }),
 
+
+# Franja Gráfica de TASA Contagios 10 entidades
+
+    html.Div( children = [dcc.Graph(figure=g10edosct)],                 
+             style = {'margin': '0% 0px 10px 0px', 'width':'20%',
+                     'font-family': 'Montserrat', 
+                     #'fontColor': 'goldenrod' #Cambia tipo de letra
+                    }),
     
-# Sexta franja (Gráfica de Decesos 10 entidades 
+################    
+# CUARTA FRANJA
+################
+    
+# Franja Gráfica de Decesos 10 entidades
+    
     html.Div( children = [dcc.Graph(figure=g10edosd)],                  
-             style = {'margin': '0% 0px 10px 0px', 'width':'50%',
+             style = {'margin': '0% 0px 10px 0px', 'width':'22%',
                      'font-family': 'Montserrat', 
                      #'fontColor': 'goldenrod' #Cambia tipo de letra
                     }),
 
+    
+# Franja Gráfica de TASA Decesos 10 entidades
+    html.Div( children = [dcc.Graph(figure=g10edosdt)],                  
+             style = {'margin': '0% 0px 10px 0px', 'width':'20%',
+                     'font-family': 'Montserrat', 
+                    }),
+    
+    
+################    
+# QUINTA FRANJA
+################
 
+#títulos
     
-#Cintillos de promedios
-    
-# Séptima franja (promedio contagios)
-    html.Div(children='Promedio de contagios mensuales',
+     html.Div('Alrededor de 60% de casos se concentran en... ',
               style={
                   'textAlign': 'left',
-                  'font-family': 'Montserrat',
-                  'color': 'brown',
-                  'margin': '0% 0px 0% 0px', 'width':'100%',  
-    }),
-                  
-# Séptima franja (promedio decesos)
+                  'font-size': 24,
+                  'font-family': 'Montserrat ExtraBold',
+                  'color': '#944C4C',
+                  'margin': '0% 40px 1% 80px', 'width':'150%',} ),
+
     
-    html.Div(children = [dcc.Graph(figure=tabla8)],
-             style={
-                  'textAlign': 'left',
-                  'font-family': 'Montserrat',
-                  'color': 'brown',
-                  'margin': '-8% 0px 0% 0px', 'width':'100%',  
-    }),
-    
-    
-# Octava franja
-     html.Div(children='Promedio de decesos mensuales',
+    html.Div('Contagios',
               style={
-                  'textAlign': 'left',
-                  'font-family': 'Montserrat',
-                  'color': 'brown',
-                  'margin': '-10% 0px 0% 0px', 'width':'100%',  
-    }),
+                  'textAlign': 'center',
+                  'font_size': 12,
+                  'font-family': 'Montserrat ExtraBold',
+                  'color': 'firebrick',
+                  'margin': '0% 0px -5% -2px', 'width':'50%',} ),
     
-    html.Div(children = [dcc.Graph(figure=tabla8a)],
-             style={
-                  'textAlign': 'left',
-                  'font-family': 'Montserrat',
-                  'color': 'brown',
-                  'margin': '-10% 0px 0% 0px', 'width':'100%',  
-    }),
+    html.Div('Decesos',
+              style={
+                  'textAlign': 'center',
+                  'font_size': 12,
+                  'font-family': 'Montserrat ExtraBold',
+                  'color': 'black',
+                  'margin': '13.3% 0px -35% -10px', 'width':'30%',} ),
     
     
-####### W19.18022021.8 
+# Franja Gráfica Pie Contagios 10 entidades
     
+    html.Div( children = [dcc.Graph(figure=piec)],                  
+             style = {'margin': '-5% 0px 0px 0px', 'width':'50%',
+                     'font-family': 'Montserrat ExtraBold', 
+                    }),
+    
+    
+# Franja Gráfica Pie Decesos 10 entidades
+    
+    html.Div( children = [dcc.Graph(figure=pied)],                  
+             style = {'margin': '10% 0px 0px 10px', 'width':'40%',
+                     'font-family': 'Montserrat', 
+                    }),
+    
+    html.Br(),    
+    
+#    html.A('Secretaría de Salud', href=SS),
+    
+    html.Div(children = [ dcc.Markdown('''
+
+#### Fuente: Secretaría de Salud, Gobierno Federal [(SSa)](https://datos.covid-19.conacyt.mx/)        Equipo que elaboró [(Perfiles)](https://raw.githubusercontent.com/winik-pg/exercises_pythoncitos/master/Autores.docx)
+''',
+    
+    )],style={'font-family': 'Montserrat ExtraLight',
+              'font-size': 14,# 'sans-serif',
+                  'textAlign': 'left','color': 'gray', 
+                  #'height' : '-10px',
+                  'margin': '0% 0px -2% 70px',
+                  'interwidth' : -3,
+                  'width': '100%',
+                  }, ),  
     
 
     
-    
-    
-    
-    
-
 #############################################################      
-
-  
-    #html.A('Code on Github', href=githublink),
+# LINKS    
+    #html.A('Fuente: Secretaría de Salud. Página web'),
     html.Br(),
     #html.A('Data Source', href=sourceurl),
 
@@ -799,7 +1177,11 @@ app.layout = html.Div(children=[
         'font-family': 'Montserrat','backgroundColor': colors['background']}, #Color de fondo dash
                      # dark=True,
                      )
-                     
+     
+
+
+
+
 
 if __name__ == '__main__':
     app.run_server()
